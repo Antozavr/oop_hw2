@@ -14,14 +14,20 @@ def the_recipe():
             cook_book.update(cb)
 
     def get_shop_list_by_dishes(dishes, person_count):
-        for recipe in cook_book.get(dishes[0]):
-            recipe['quantity'] *= person_count
-            print(recipe)
-        for recipe in cook_book.get(dishes[1]):
-            recipe['quantity'] *= person_count
-            print(recipe)
+        needed_ingr1 = {}
+        needed_ingr2 = {}
+        for recipe1 in cook_book.get(dishes[0]):
+            n, q, m = recipe1.values()
+            res = {n: {'quantity': int(q * person_count), 'measure': m}}
+            needed_ingr1.update(res)
+        for recipe2 in cook_book.get(dishes[1]):
+            r, t, y = recipe2.values()
+            ser = {r: {'quantity': int(t * person_count), 'measure': y}}
+            needed_ingr2.update(ser)
+        a = (needed_ingr1 | needed_ingr2)
+        print(a)
 
-    return get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 5)
+    return get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2)
 
 
 the_recipe()
